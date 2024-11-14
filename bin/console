@@ -1,0 +1,15 @@
+#!/usr/bin/env php
+<?php
+
+require dirname(__DIR__).'/vendor/autoload.php';
+
+use Symfony\Component\Console\Application;
+use App\Command\SyncProductsCommand;
+
+$application = new Application();
+$application->add(new SyncProductsCommand());
+try {
+    $application->run();
+} catch (Exception $e) {
+    echo $e->getMessage();
+}
