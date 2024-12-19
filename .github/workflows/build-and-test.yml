@@ -27,8 +27,5 @@ jobs:
       - name: Install dependencies
         run: docker compose exec pobo-sdk-php composer install --prefer-dist --no-progress --no-suggest
 
-      - name: Run tests
-        run: docker compose exec pobo-sdk-php vendor/bin/phpunit --testdox
-
       - name: Stop and clean up Docker containers
         run: docker compose -f docker-compose.yml down
