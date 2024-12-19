@@ -1,0 +1,35 @@
+name: Build and Test
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build-and-test:
+    name: Build and Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Compose
+        run: |
+          docker-compose --version
+
+      - name: Build Docker services
+        run: docker-compose -f docker-compose.yml build
+
+      - name: Start Docker containers
+        run: docker-compose -f docker-compose.yml up -d
+
+      - name: Install dependencies
+        run: docker exec pobo-sdk-php composer install --prefer-dist --no-progress --no-suggest
+
+      - name: Run tests
+        run: docker exec pobo-sdk-php vendor/bin/phpunit --testdox
+
+      - name: Stop and clean up Docker containers
+        run: docker-compose -f docker-compose.yml down

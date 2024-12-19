@@ -3,11 +3,11 @@
 
 require dirname(__DIR__).'/vendor/autoload.php';
 
+use App\Command\ExportProductsCommand;
 use Symfony\Component\Console\Application;
-use App\Command\SyncProductsCommand;
 
 $application = new Application();
-$application->add(new SyncProductsCommand());
+$application->add(new ExportProductsCommand());
 try {
     $application->run();
 } catch (Exception $e) {
